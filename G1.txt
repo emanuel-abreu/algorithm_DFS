@@ -1,0 +1,15 @@
+8 14 D
+hh
+ab
+bc
+ea
+be
+bf
+cd
+gf
+cg
+dc
+dh
+ef
+fg
+gh
