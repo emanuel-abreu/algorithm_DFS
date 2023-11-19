@@ -72,7 +72,9 @@ def DFS_VISIT(u):
 
 DFS(listaDeVertices)
 
-print("Nomenclatura das arestas: \n", nomenclaturaDasArestas)
+print("Nomenclatura das arestas: ")
+for aresta, nomenclatura in nomenclaturaDasArestas.items():
+    print(f"{aresta}: {nomenclatura}")
 
 print("\nvetor d:", vetorD)
 print("vetor f:", vetorF)
