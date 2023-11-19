@@ -1,16 +1,18 @@
-entrada = open("G2.txt", "r")
+entrada = open("G1.txt", "r")
 
 linha = entrada.readlines()
 grafoDeEntrada = linha[0].split()
 
+cor = {}
 listaDeVertices = []
 relacionamentoDosVertices = {}
-vetorD = []
-vetorF = []
 
 numeroVertices = int(grafoDeEntrada[0])
 numeroArestas = int(grafoDeEntrada[1])
 nomeDoGrafo = grafoDeEntrada[2]
+
+vetorD = [0]*numeroVertices
+vetorF = [0]*numeroVertices
 
 for i in range(1, len(linha)):
     vetorDaLinha = linha[i].split()
@@ -25,13 +27,13 @@ for i in range(1, len(linha)):
     if linha[i][1] not in relacionamentoDosVertices[linha[i][0]]:
         relacionamentoDosVertices[linha[i][0]].append(linha[i][1])
 
+listaDeVertices.sort()
+mapeamentoIndices = {v: i for i, v in enumerate(listaDeVertices)}
+
 listaDeVertices.sort(key=lambda v: len(relacionamentoDosVertices[v]), reverse=True)
+
 relacionamentoDosVerticesOrdenado = dict(sorted(relacionamentoDosVertices.items()))
 
-print(relacionamentoDosVerticesOrdenado)
-print(listaDeVertices)
-
-cor = {}
 def DFS(G):
     global mark
     for u in G:
@@ -40,7 +42,6 @@ def DFS(G):
 
     for u in G:
         if cor[u] == "BRANCO":
-            print("vertice u: ", u)
             DFS_VISIT(u)
     
     
@@ -48,27 +49,19 @@ def DFS_VISIT(u):
     global mark
     cor[u] = "CINZA"
     mark = mark + 1
-    print("mark cinza: ",mark)
-    print(cor)
-    vetorD.append(mark)
-
+    vetorD[mapeamentoIndices[u]] = mark
 
     for v in relacionamentoDosVerticesOrdenado[u]:
         if cor[v] == "BRANCO":
-            print("vertice v: ", v)
             DFS_VISIT(v)
     
     cor[u] = "PRETO"
-    print(u)
-    print(cor)
     mark = mark + 1
-    print("mark preto: ",mark,"\n\n")
-    vetorF.append(mark)
+    vetorF[mapeamentoIndices[u]] = mark
 
 DFS(listaDeVertices)
 
 print("vetor d:",  vetorD)
 print("vetor f:" , vetorF)
-
 
 entrada.close()
