@@ -6,6 +6,7 @@ grafoDeEntrada = linha[0].split()
 cor = {}
 listaDeVertices = []
 relacionamentoDosVertices = {}
+nomenclaturaDasArestas = {} 
 
 numeroVertices = int(grafoDeEntrada[0])
 numeroArestas = int(grafoDeEntrada[1])
@@ -44,7 +45,6 @@ def DFS(G):
         if cor[u] == "BRANCO":
             DFS_VISIT(u)
     
-    
 def DFS_VISIT(u):
     global mark
     cor[u] = "CINZA"
@@ -53,7 +53,18 @@ def DFS_VISIT(u):
 
     for v in relacionamentoDosVerticesOrdenado[u]:
         if cor[v] == "BRANCO":
+            aresta = (u, v)
+            nomenclaturaDasArestas[aresta] = "Árvore"
             DFS_VISIT(v)
+        elif cor[v] == "CINZA":
+            aresta = (u, v)
+            nomenclaturaDasArestas[aresta] = "Retorno"
+        elif vetorD[mapeamentoIndices[v]] > vetorD[mapeamentoIndices[u]]:
+            aresta = (u, v)
+            nomenclaturaDasArestas[aresta] = "Avanço"
+        else:
+            aresta = (u, v)
+            nomenclaturaDasArestas[aresta] = "Cruzamento"
     
     cor[u] = "PRETO"
     mark = mark + 1
@@ -61,7 +72,9 @@ def DFS_VISIT(u):
 
 DFS(listaDeVertices)
 
-print("vetor d:",  vetorD)
-print("vetor f:" , vetorF)
+print("Nomenclatura das arestas: \n", nomenclaturaDasArestas)
+
+print("\nvetor d:", vetorD)
+print("vetor f:", vetorF)
 
 entrada.close()
