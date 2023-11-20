@@ -12,21 +12,38 @@ numeroVertices = int(grafoDeEntrada[0])
 numeroArestas = int(grafoDeEntrada[1])
 nomeDoGrafo = grafoDeEntrada[2]
 
-vetorD = [0]*numeroVertices
-vetorF = [0]*numeroVertices
+vetorD = [0] * numeroVertices
+vetorF = [0] * numeroVertices
 
 for i in range(1, len(linha)):
     vetorDaLinha = linha[i].split()
 
-    if linha[i][0] not in listaDeVertices:
-        relacionamentoDosVertices[linha[i][0]] = []
-        listaDeVertices.append(linha[i][0])
-    elif linha[i][1] not in listaDeVertices:
-        relacionamentoDosVertices[linha[i][1]] = []
-        listaDeVertices.append(linha[i][1])
+    if(len(vetorDaLinha) == 2):
+        vertices = [v.strip() for v in vetorDaLinha]
 
-    if linha[i][1] not in relacionamentoDosVertices[linha[i][0]]:
-        relacionamentoDosVertices[linha[i][0]].append(linha[i][1])
+        if vertices[0] not in listaDeVertices:
+            relacionamentoDosVertices[vertices[0]] = []
+            listaDeVertices.append(vertices[0])
+
+        if vertices[1] not in listaDeVertices:
+            relacionamentoDosVertices[vertices[1]] = []
+            listaDeVertices.append(vertices[1])
+
+        if vertices[1] not in relacionamentoDosVertices[vertices[0]]:
+            relacionamentoDosVertices[vertices[0]].append(vertices[1])
+
+    else: 
+        vetorDaLinha = linha[i].split()
+
+        if linha[i][0] not in listaDeVertices:
+            relacionamentoDosVertices[linha[i][0]] = []
+            listaDeVertices.append(linha[i][0])
+        elif linha[i][1] not in listaDeVertices:
+            relacionamentoDosVertices[linha[i][1]] = []
+            listaDeVertices.append(linha[i][1])
+
+        if linha[i][1] not in relacionamentoDosVertices[linha[i][0]]:
+            relacionamentoDosVertices[linha[i][0]].append(linha[i][1])
 
 listaDeVertices.sort()
 mapeamentoIndices = {v: i for i, v in enumerate(listaDeVertices)}
